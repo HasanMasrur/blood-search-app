@@ -1,8 +1,10 @@
 import 'package:bloodsearchapp/config/const/app/app_constant.dart';
+import 'package:bloodsearchapp/config/const/app/state_management_provider.dart';
 import 'package:bloodsearchapp/config/navigation/app_route.dart';
 import 'package:bloodsearchapp/config/navigation/route_name.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() {
@@ -11,9 +13,11 @@ void main() {
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp, // Locks the app to portrait mode
   ]).then((_) {
-    runApp(MyApp(
-      router: router,
-    ));
+    runApp(MultiBlocProvider(
+        providers: StateManagementProviders.providers,
+        child: MyApp(
+          router: router,
+        )));
     //  analyticsObserver: observer,
   });
 }
@@ -56,7 +60,6 @@ class _MyAppState extends State<MyApp> {
           navigatorKey: AppRouter.navigatorKey,
           onGenerateRoute: widget.router.generateRoute,
           initialRoute: RouteName.launcherScreen,
-          // home: LauncherScreen(),
         );
       },
     );
