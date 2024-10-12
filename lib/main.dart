@@ -2,6 +2,9 @@ import 'package:bloodsearchapp/config/const/app/app_constant.dart';
 import 'package:bloodsearchapp/config/const/app/state_management_provider.dart';
 import 'package:bloodsearchapp/config/navigation/app_route.dart';
 import 'package:bloodsearchapp/config/navigation/route_name.dart';
+import 'package:bloodsearchapp/config/theme/app_theme.dart';
+import 'package:bloodsearchapp/config/theme/cubit/theme_cubit.dart';
+import 'package:bloodsearchapp/config/theme/cubit/theme_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -53,13 +56,21 @@ class _MyAppState extends State<MyApp> {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
-        return MaterialApp(
-          title: AppConstants.appName,
-          debugShowCheckedModeBanner: false,
-          themeMode: ThemeMode.system,
-          navigatorKey: AppRouter.navigatorKey,
-          onGenerateRoute: widget.router.generateRoute,
-          initialRoute: RouteName.launcherScreen,
+        return BlocBuilder<ThemeCubit, ThemeState>(
+          builder: (context, state) {
+            final textTheme = Theme.of(context).textTheme;
+            return MaterialApp(
+              title: AppConstants.appName,
+              debugShowCheckedModeBanner: false,
+              themeMode: ThemeMode.system,
+              navigatorKey: AppRouter.navigatorKey,
+              theme: AppTheme.lightTheme(textTheme),
+              darkTheme: AppTheme.darkTheme(textTheme),
+              onGenerateRoute: widget.router.generateRoute,
+              initialRoute: RouteName.launcherScreen,
+              // home: LauncherScreen(),
+            );
+          },
         );
       },
     );
