@@ -10,6 +10,7 @@ class AppAssets {
   static const String bloodLogo = "$icons/blood_logo.svg";
   static const String bloodLogoRed = "$icons/blood_logo_red.svg";
   static const String bloodLogoWhite = "$icons/blood_logo_white.svg";
+  static const String passwordEye = "$icons/password-eye.svg";
   // png logo
   static const String bloodLogoPng = "$icons/blood_png.png";
 
