@@ -1,5 +1,6 @@
 import 'package:bloodsearchapp/config/const/app/app_constant.dart';
 import 'package:bloodsearchapp/config/const/app/state_management_provider.dart';
+import 'package:bloodsearchapp/config/di/dependency_injector.dart';
 import 'package:bloodsearchapp/config/navigation/app_route.dart';
 import 'package:bloodsearchapp/config/navigation/route_name.dart';
 import 'package:bloodsearchapp/config/theme/app_theme.dart';
@@ -9,10 +10,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  //---AppRoute
   final AppRouter router = AppRouter();
+  //---Dependencies-Injection
+  await configureDependencies();
+  //## ---Hydrated Bloc---
+  HydratedBloc.storage = await HydratedStorage.build(
+    storageDirectory: await getApplicationDocumentsDirectory(),
+  );
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp, // Locks the app to portrait mode
   ]).then((_) {
