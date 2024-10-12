@@ -56,7 +56,7 @@ class InputFieldWidget extends StatelessWidget {
       ),
       decoration: InputDecoration(
         isDense: true,
-        contentPadding: EdgeInsets.all(15.w),
+        contentPadding: EdgeInsets.all(20.w),
         suffixIcon: sufixIconview
             ? Padding(
                 padding: EdgeInsets.all(12.w),
