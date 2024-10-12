@@ -1,5 +1,6 @@
 import 'package:bloodsearchapp/config/const/app/app_assets.dart';
 import 'package:bloodsearchapp/config/const/app/app_colors.dart';
+import 'package:bloodsearchapp/config/navigation/route_name.dart';
 import 'package:bloodsearchapp/config/ulilities/extensions/context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -21,8 +22,7 @@ class LauncherScreenState extends State<LauncherScreen> {
 
   Future<void> afterNavigate() async {
     await Future.delayed(const Duration(seconds: 3)).whenComplete(() async {
-      // await Navigator.pushReplacementNamed(
-      //     context, RouteName.launcherScreen);
+      await Navigator.pushReplacementNamed(context, RouteName.loginScreen);
     });
   }
 

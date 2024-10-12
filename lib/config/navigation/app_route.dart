@@ -1,4 +1,5 @@
 import 'package:bloodsearchapp/config/navigation/route_name.dart';
+import 'package:bloodsearchapp/features/auth/presentation/pages/login_screen.dart';
 import 'package:bloodsearchapp/features/launcher/presentation/pages/launcher_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -12,11 +13,11 @@ class AppRouter {
           builder: (_) => const LauncherScreen(),
           settings: settings,
         );
-      // case RouteName.leandingScreen:
-      //   return MaterialPageRoute(
-      //     builder: (_) => const LeandingScreen(),
-      //     settings: settings,
-      //   );
+      case RouteName.loginScreen:
+        return MaterialPageRoute(
+          builder: (_) => const LoginScreen(),
+          settings: settings,
+        );
       default:
         return MaterialPageRoute(
           builder: (_) => const LauncherScreen(),

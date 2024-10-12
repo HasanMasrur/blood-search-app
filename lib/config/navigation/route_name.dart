@@ -9,5 +9,5 @@ class RouteName {
   }
 
   static const String launcherScreen = '/';
-  static const String loginScreen = '/loginScreen';
+  static const String loginScreen = "/loginScreen";
 }
