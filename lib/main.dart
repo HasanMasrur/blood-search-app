@@ -46,8 +46,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // This widget is the root of your application.
-
   @override
   void initState() {
     super.initState();
@@ -55,7 +53,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void dispose() {
-    //  AwesomeNotifications().dispose();
     super.dispose();
   }
 
@@ -78,7 +75,6 @@ class _MyAppState extends State<MyApp> {
               darkTheme: AppTheme.darkTheme(textTheme),
               onGenerateRoute: widget.router.generateRoute,
               initialRoute: RouteName.launcherScreen,
-              // home: LauncherScreen(),
             );
           },
         );
