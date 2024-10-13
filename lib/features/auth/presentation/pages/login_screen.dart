@@ -2,11 +2,17 @@ import 'dart:developer';
 import 'package:bloodsearchapp/config/const/app/app_assets.dart';
 import 'package:bloodsearchapp/config/const/app/app_colors.dart';
 import 'package:bloodsearchapp/config/navigation/route_name.dart';
+import 'package:bloodsearchapp/config/ulilities/enum/bloc_api_state.dart';
 import 'package:bloodsearchapp/config/ulilities/extensions/context_extensions.dart';
 import 'package:bloodsearchapp/core/widgets/custom_button.dart';
 import 'package:bloodsearchapp/core/widgets/input_field_widget.dart';
+import 'package:bloodsearchapp/features/auth/data/models/loginUc.dart';
+import 'package:bloodsearchapp/features/auth/presentation/cubit/login/login_cubit.dart';
+import 'package:bloodsearchapp/features/auth/presentation/cubit/login/login_state.dart';
 import 'package:bloodsearchapp/features/auth/presentation/widgets/login_icon_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -25,7 +31,6 @@ class LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   late TextEditingController phoneCNT = TextEditingController(text: '');
   final TextEditingController password = TextEditingController(text: "");
-
   TextEditingController email = TextEditingController(text: "");
   final isPasswordVisible = ValueNotifier(true);
   bool isShowPass = false;
@@ -88,76 +93,96 @@ class LoginScreenState extends State<LoginScreen> {
                           fontSize: 22.sp),
                     ),
                     25.verticalSpace,
-                    Container(
-                      padding: const EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                            width: 1,
+                    IntlPhoneField(
+                      flagsButtonPadding:
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 15.h),
+                      dropdownIconPosition: IconPosition.trailing,
+                      pickerDialogStyle: PickerDialogStyle(
+                          countryNameStyle: TextStyle(
+                        fontStyle: FontStyle.normal,
+                        fontSize: 15.h,
+                      )),
+                      controller: phoneCNT,
+                      onCountryChanged: (country) {
+                        //  log("Max ${country.maxLength}");
+                      },
+                      style: GoogleFonts.poppins(
+                        fontStyle: FontStyle.normal,
+                        textStyle: Theme.of(context).textTheme.displayLarge,
+                        fontSize: 13.h,
+                        fontWeight: FontWeight.w600,
+                        color: context.isDarkMode
+                            ? AppColors.white
+                            : AppColors.black,
+                      ),
+                      keyboardType: TextInputType
+                          .phone, // This sets the keyboard to numeric
+                      inputFormatters: [
+                        FilteringTextInputFormatter
+                            .digitsOnly, // This allows only digits
+                      ],
+                      decoration: InputDecoration(
+                        fillColor: context.isDarkMode
+                            ? AppColors.black
+                            : AppColors.white,
+                        prefixIconColor: Colors.grey,
+                        errorText: null,
+                        labelText: 'Phone Number',
+                        // border: InputBorder.none,
+                        // label: ,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.w),
+                          borderSide: BorderSide(
+                              width: 1,
+                              color: context.isDarkMode
+                                  ? AppColors.white
+                                  : AppColors.black),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.w),
+                          borderSide: BorderSide(
+                              width: 1,
+                              color: context.isDarkMode
+                                  ? AppColors.white
+                                  : AppColors.black),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.w),
+                          borderSide: BorderSide(
+                              width: 1,
+                              color: context.isDarkMode
+                                  ? AppColors.white
+                                  : AppColors.black),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
                             color: context.isDarkMode
                                 ? AppColors.white
                                 : AppColors.black,
+                            width: 1,
                           ),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: IntlPhoneField(
-                        flagsButtonPadding:
-                            const EdgeInsets.symmetric(horizontal: 10),
-                        dropdownIconPosition: IconPosition.trailing,
-                        pickerDialogStyle: PickerDialogStyle(
-                            countryNameStyle: TextStyle(
-                          fontStyle: FontStyle.normal,
-                          fontSize: 15.h,
-                        )),
-                        controller: phoneCNT,
-                        onCountryChanged: (country) {
-                          //  log("Max ${country.maxLength}");
-                        },
-                        style: GoogleFonts.poppins(
+                        ),
+                        errorStyle: GoogleFonts.poppins(
                           fontStyle: FontStyle.normal,
                           textStyle: Theme.of(context).textTheme.displayLarge,
-                          fontSize: 13.h,
+                          color: const Color(0xff474747),
+                          fontSize: 10,
                           fontWeight: FontWeight.w600,
-                          color: context.isDarkMode
-                              ? AppColors.white
-                              : AppColors.black,
                         ),
-                        decoration: InputDecoration(
-                          fillColor: context.isDarkMode
-                              ? AppColors.black
-                              : AppColors.white,
-                          prefixIconColor: Colors.grey,
-                          errorText: null,
-                          labelText: 'Phone Number',
-                          // border: InputBorder.none,
-                          // label: ,
-                          border: InputBorder.none,
-                          //  const OutlineInputBorder(
-                          //   borderSide: BorderSide(color: Color(0xffD1D1D6)),
-                          // ),
-                          focusedBorder: InputBorder.none,
-                          //  const OutlineInputBorder(
-                          //   borderSide: BorderSide(color: Color(0xffD1D1D6)),
-                          // ),
-                          errorBorder: InputBorder.none,
-                          // const OutlineInputBorder(
-                          //   borderSide: BorderSide(
-                          //     color: Color(0xff474747),
-                          //     width: 1,
-                          //   ),
-                          // ),
-                          errorStyle: GoogleFonts.poppins(
-                            fontStyle: FontStyle.normal,
-                            textStyle: Theme.of(context).textTheme.displayLarge,
-                            color: const Color(0xff474747),
-                            fontSize: 10,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        initialCountryCode: 'BD',
-                        onChanged: (phone) {
-                          //   log(phone.countryISOCode);
-                          phoneValue.value = phone;
-                        },
                       ),
+                      initialCountryCode: 'BD',
+                      onChanged: (phone) {
+                        //   log(phone.countryISOCode);
+                        phoneValue.value = phone;
+                      },
+                      // validator: (value) {
+                      //   if (value == null || value.number.isEmpty) {
+                      //     return 'Please enter your phone number';
+                      //   } else if (value.number.length < 10) {
+                      //     return 'Please enter a valid phone number';
+                      //   }
+                      //   return null;
+                      // },
                     ),
                     18.verticalSpace,
                     // password field :
@@ -199,14 +224,51 @@ class LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     12.verticalSpace,
-                    CustomButton(
-                        title: "Sign in",
-                        onPressed: () {
-                          if (formKey.currentState!.validate()) {
-                            // Navigator.pushReplacementNamed(
-                            //     context, RouteName.dashboardScreen);
-                          }
-                        }),
+                    BlocConsumer<LoginCubit, LoginState>(
+                        builder: (context, state) {
+                      if (state.apiState == NormalApiState.loading) {
+                        return const Center(
+                          child: CircularProgressIndicator.adaptive(
+                            backgroundColor: AppColors.primary,
+                          ),
+                        );
+                      }
+                      return CustomButton(
+                          title: "Sign in",
+                          onPressed: () {
+                            if (formKey.currentState?.validate() ?? false) {
+                              if (phoneCNT.text.isEmpty ||
+                                  phoneValue.value.countryCode.isEmpty) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text('Requried Phone number !')),
+                                );
+                                return;
+                              }
+                              context.read<LoginCubit>().login(LogInUc(
+                                  countryCode: phoneValue.value.countryCode,
+                                  phone: phoneCNT.text,
+                                  password: password.text));
+                            }
+                          });
+                    }, listener: (context, state) {
+                      switch (state.apiState) {
+                        case NormalApiState.loading:
+                          break;
+                        case NormalApiState.loaded:
+                          Navigator.pushNamed(
+                              context, RouteName.otpVerifyScreen);
+                          break;
+                        case NormalApiState.failure:
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(state.errorMessage)),
+                          );
+                          break;
+                        default:
+                          print('Invalid day');
+                      }
+                    }),
+
                     20.verticalSpace,
                     LoginIconButton(
                       onTap: () async {},

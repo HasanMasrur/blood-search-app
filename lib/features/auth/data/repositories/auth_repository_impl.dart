@@ -13,9 +13,9 @@ class AuthRepositoryImpl extends AuthRepository {
   AuthRepositoryImpl({required this.authRemoteServices});
 
   @override
-  Future<Either<Failure, UserEntities>> getLogin(
-      {required LoginUc loginUc}) async {
-    return await authRemoteServices.getLogin(loginuc: loginUc);
+  Future<Either<Failure, UserEntities>> login(
+      {required LogInUc loginUc}) async {
+    return await authRemoteServices.login(loginUc: loginUc);
   }
 
   @override

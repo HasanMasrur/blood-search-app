@@ -1,29 +1,33 @@
 // To parse this JSON data, do
 //
-//     final loginUc = loginUcFromJson(jsonString);
+//     final logInUc = logInUcFromJson(jsonString);
 
 import 'dart:convert';
 
-LoginUc loginUcFromJson(String str) => LoginUc.fromJson(json.decode(str));
+LogInUc logInUcFromJson(String str) => LogInUc.fromJson(json.decode(str));
 
-String loginUcToJson(LoginUc data) => json.encode(data.toJson());
+String logInUcToJson(LogInUc data) => json.encode(data.toJson());
 
-class LoginUc {
-  String email;
+class LogInUc {
+  String countryCode;
+  String phone;
   String password;
 
-  LoginUc({
-    required this.email,
+  LogInUc({
+    required this.countryCode,
+    required this.phone,
     required this.password,
   });
 
-  factory LoginUc.fromJson(Map<String, dynamic> json) => LoginUc(
-        email: json["email"],
+  factory LogInUc.fromJson(Map<String, dynamic> json) => LogInUc(
+        countryCode: json["country_code"],
+        phone: json["phone"],
         password: json["password"],
       );
 
   Map<String, dynamic> toJson() => {
-        "email": email,
+        "country_code": countryCode,
+        "phone": phone,
         "password": password,
       };
 }

@@ -14,11 +14,10 @@ import 'package:dartz/dartz.dart';
 class AuthRemoteServices {
   final DioClient _dioClient = DioClient.instance;
 
-  Future<Either<Failure, UserModel>> getLogin(
-      {required LoginUc loginuc}) async {
+  Future<Either<Failure, UserModel>> login({required LogInUc loginUc}) async {
     final APIRequestParam param = APIRequestParam(
       path: ApiEndPoints.login,
-      data: loginuc.toJson(),
+      data: loginUc.toJson(),
       doCache: false,
     );
     return await _dioClient.post(param).then((response) {

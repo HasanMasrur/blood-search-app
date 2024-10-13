@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:bloodsearchapp/config/ulilities/enum/bloc_api_state.dart';
 import 'package:bloodsearchapp/features/auth/data/models/loginUc.dart';
 import 'package:bloodsearchapp/features/auth/domain/entities/user_entities.dart';
@@ -16,11 +15,10 @@ class LoginCubit extends Cubit<LoginState> {
             errorMessage: "Please Swipe Down to Refresh",
           ),
         );
-  Future<void> getLogins(LoginUc loginUc) async {
+  Future<void> login(LogInUc loginUc) async {
     emit(state.copyWith(apiState: NormalApiState.loading));
-    await authUseCase.getLogin(loginUc: loginUc).then((res) {
+    await authUseCase.login(loginUc: loginUc).then((res) {
       res.fold((err) {
-        log("call err ${err.toString()}");
         return emit(state.copyWith(
             apiState: NormalApiState.failure, errorMessage: err.message));
       }, (suc) {
@@ -30,7 +28,6 @@ class LoginCubit extends Cubit<LoginState> {
             errorMessage: ""));
       });
     }).onError((error, stackTrace) {
-      log("Error cubit 2 : ${error.toString()}");
       emit(
         state.copyWith(
             apiState: NormalApiState.failure, errorMessage: error.toString()),

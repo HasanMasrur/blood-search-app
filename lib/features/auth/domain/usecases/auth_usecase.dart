@@ -10,9 +10,9 @@ class AuthUseCase {
   final AuthRepository authRepository;
   AuthUseCase({required this.authRepository});
 
-  Future<Either<Failure, UserEntities>> getLogin(
-      {required LoginUc loginUc}) async {
-    return await authRepository.getLogin(loginUc: loginUc);
+  Future<Either<Failure, UserEntities>> login(
+      {required LogInUc loginUc}) async {
+    return await authRepository.login(loginUc: loginUc);
   }
 
   Future<Either<Failure, dynamic>> registration(
