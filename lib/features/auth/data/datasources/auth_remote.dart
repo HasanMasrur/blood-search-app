@@ -2,15 +2,6 @@ import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:bitcommerz/core/error/api_error_generator.dart';
-import 'package:bitcommerz/core/error/error.dart';
-import 'package:bitcommerz/core/network/dio_client/dio_client.dart';
-import 'package:bitcommerz/core/network/dio_client/request_params.dart';
-import 'package:bitcommerz/features/auth/data/models/loginUc.dart';
-import 'package:bitcommerz/features/auth/data/models/otpVerifyUc.dart';
-import 'package:bitcommerz/features/auth/data/models/registationUc.dart';
-import 'package:bitcommerz/features/auth/data/models/shop_setup_uc.dart';
-import 'package:bitcommerz/features/auth/data/models/user_model.dart';
 
 class AuthRemoteServices {
   final DioClient _dioClient = DioClient.instance;

@@ -1,6 +1,5 @@
+import 'package:bloodsearchapp/features/auth/domain/entities/user_entities.dart';
 import 'package:equatable/equatable.dart';
-import 'package:bitcommerz/config/utilities/enum/bloc_api_state.dart';
-import 'package:bitcommerz/features/auth/domain/entities/user_entities.dart';
 
 class LoginState extends Equatable {
   final NormalApiState apiState;
