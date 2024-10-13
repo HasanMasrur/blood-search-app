@@ -5,7 +5,7 @@ import 'package:bloodsearchapp/features/auth/domain/repositories/auth_repository
 import 'package:bloodsearchapp/features/auth/domain/usecases/auth_usecase.dart';
 import 'package:bloodsearchapp/features/auth/presentation/cubit/login/login_cubit.dart';
 import 'package:bloodsearchapp/features/auth/presentation/cubit/registation/registation_cubit.dart';
-import 'package:bloodsearchapp/features/auth/presentation/pages/otp_verify/otp_verify_cubit.dart';
+import 'package:bloodsearchapp/features/auth/presentation/cubit/otp_verify/otp_verify_cubit.dart';
 import 'package:get_it/get_it.dart';
 
 final GetIt sl = GetIt.instance;

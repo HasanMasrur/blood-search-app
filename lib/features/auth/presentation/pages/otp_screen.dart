@@ -6,8 +6,8 @@ import 'package:bloodsearchapp/config/ulilities/enum/bloc_api_state.dart';
 import 'package:bloodsearchapp/config/ulilities/extensions/context_extensions.dart';
 import 'package:bloodsearchapp/core/widgets/custom_button.dart';
 import 'package:bloodsearchapp/features/auth/data/models/otpVerifyUc.dart';
-import 'package:bloodsearchapp/features/auth/presentation/pages/otp_verify/otp_verify_cubit.dart';
-import 'package:bloodsearchapp/features/auth/presentation/pages/otp_verify/otp_verify_state.dart';
+import 'package:bloodsearchapp/features/auth/presentation/cubit/otp_verify/otp_verify_cubit.dart';
+import 'package:bloodsearchapp/features/auth/presentation/cubit/otp_verify/otp_verify_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -146,7 +146,7 @@ class OtpVerifyScreenState extends State<OtpVerifyScreen> {
                     style: Theme.of(context).textTheme.bodyMedium,
                     children: [
                       TextSpan(
-                        text: '01863742138',
+                        text: widget.phoneNumber,
                         style: Theme.of(context)
                             .textTheme
                             .bodyMedium
@@ -269,7 +269,7 @@ class OtpVerifyScreenState extends State<OtpVerifyScreen> {
                       onPressed: () {
                         if (pinController.text.length == 6) {
                           context.read<OtpVerifyCubit>().otpVerify(OtpVerifyUc(
-                              otpCode: pinController.text,
+                              otpCode: int.parse(pinController.text),
                               phoneNumber: widget.phoneNumber));
                         }
                       });

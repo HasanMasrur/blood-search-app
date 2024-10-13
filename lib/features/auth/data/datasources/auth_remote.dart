@@ -67,7 +67,7 @@ class AuthRemoteServices {
   Future<Either<Failure, dynamic>> otpVerify(
       {required OtpVerifyUc optVerifyUc}) async {
     final APIRequestParam param = APIRequestParam(
-      path: '',
+      path: ApiEndPoints.otpVerifyed,
       data: optVerifyUc.toJson(),
       doCache: false,
     );

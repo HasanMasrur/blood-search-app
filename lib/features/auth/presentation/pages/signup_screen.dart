@@ -387,7 +387,8 @@ class SignUpScreenState extends State<SignUpScreen> {
                           break;
                         case NormalApiState.loaded:
                           Navigator.pushNamed(
-                              context, RouteName.otpVerifyScreen);
+                              context, RouteName.otpVerifyScreen,
+                              arguments: state.phone);
                           break;
                         case NormalApiState.failure:
                           ScaffoldMessenger.of(context).showSnackBar(

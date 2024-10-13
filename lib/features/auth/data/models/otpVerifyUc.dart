@@ -1,6 +1,6 @@
 // ignore: file_names
 class OtpVerifyUc {
-  final String otpCode;
+  final int otpCode;
   final String phoneNumber;
 
   OtpVerifyUc({

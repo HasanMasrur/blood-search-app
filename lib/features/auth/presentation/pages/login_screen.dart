@@ -169,8 +169,8 @@ class LoginScreenState extends State<LoginScreen> {
                         case NormalApiState.loading:
                           break;
                         case NormalApiState.loaded:
-                          Navigator.pushNamed(
-                              context, RouteName.otpVerifyScreen);
+                          // Navigator.pushNamed(
+                          //     context, RouteName.otpVerifyScreen);
                           break;
                         case NormalApiState.failure:
                           ScaffoldMessenger.of(context).showSnackBar(

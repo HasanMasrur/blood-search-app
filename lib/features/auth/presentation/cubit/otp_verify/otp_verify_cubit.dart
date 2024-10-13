@@ -1,7 +1,7 @@
 import 'package:bloodsearchapp/config/ulilities/enum/bloc_api_state.dart';
 import 'package:bloodsearchapp/features/auth/data/models/otpVerifyUc.dart';
 import 'package:bloodsearchapp/features/auth/domain/usecases/auth_usecase.dart';
-import 'package:bloodsearchapp/features/auth/presentation/pages/otp_verify/otp_verify_state.dart';
+import 'package:bloodsearchapp/features/auth/presentation/cubit/otp_verify/otp_verify_state.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 class OtpVerifyCubit extends Cubit<OtpVerifyState> {

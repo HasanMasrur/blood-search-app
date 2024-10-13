@@ -33,7 +33,7 @@ class RegistationCubit extends Cubit<RegistationState> {
       }, (suc) {
         return emit(state.copyWith(
             apiState: NormalApiState.loaded,
-            phone: suc['phone'],
+            phone: suc['phone_number'],
             errorMessage: ""));
       });
     }).onError((error, stackTrace) {
