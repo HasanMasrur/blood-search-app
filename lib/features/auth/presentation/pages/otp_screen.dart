@@ -278,7 +278,7 @@ class OtpVerifyScreenState extends State<OtpVerifyScreen> {
                     case NormalApiState.loading:
                       break;
                     case NormalApiState.loaded:
-                      Navigator.pushNamed(context, RouteName.otpVerifyScreen);
+                      Navigator.pushNamed(context, RouteName.dashboardScreen);
                       break;
                     case NormalApiState.failure:
                       ScaffoldMessenger.of(context).showSnackBar(

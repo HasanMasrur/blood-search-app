@@ -5,6 +5,7 @@ import 'package:bloodsearchapp/features/auth/presentation/pages/login_screen.dar
 import 'package:bloodsearchapp/features/auth/presentation/pages/otp_screen.dart';
 import 'package:bloodsearchapp/features/auth/presentation/cubit/otp_verify/otp_verify_cubit.dart';
 import 'package:bloodsearchapp/features/auth/presentation/pages/signup_screen.dart';
+import 'package:bloodsearchapp/features/dashboard/presentation/pages/dashboard_screen.dart';
 import 'package:bloodsearchapp/features/launcher/presentation/pages/launcher_screen.dart';
 import 'package:bloodsearchapp/features/auth/presentation/cubit/registation/registation_cubit.dart';
 import 'package:flutter/material.dart';
@@ -47,6 +48,11 @@ class AppRouter {
               phoneNumber: args!,
             ),
           ),
+          settings: settings,
+        );
+      case RouteName.dashboardScreen:
+        return MaterialPageRoute(
+          builder: (_) => const DashboardScreen(),
           settings: settings,
         );
 
