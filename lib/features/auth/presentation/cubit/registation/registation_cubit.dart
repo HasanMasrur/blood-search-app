@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:bloodsearchapp/config/ulilities/enum/bloc_api_state.dart';
 import 'package:bloodsearchapp/features/auth/data/models/registationUc.dart';
 import 'package:bloodsearchapp/features/auth/domain/usecases/auth_usecase.dart';
 import 'package:bloodsearchapp/features/auth/presentation/cubit/registation/registation_state.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:sms_autofill/sms_autofill.dart';
 
 class RegistationCubit extends Cubit<RegistationState> {
   final AuthUseCase authUseCase;
@@ -16,7 +19,14 @@ class RegistationCubit extends Cubit<RegistationState> {
         );
   Future<void> signUp(RegistrationUc registationUc) async {
     emit(state.copyWith(apiState: NormalApiState.loading));
-    await authUseCase.registration(registationUc: registationUc).then((res) {
+    // appkey add [for auto sms fill ]
+    String appKey = await SmsAutoFill().getAppSignature;
+    log(appKey);
+    // if (appKey.isEmpty) {
+    //   return;
+    // }
+    RegistrationUc registationUC = registationUc.copyWith(appKey: "appkey");
+    await authUseCase.signUp(registationUc: registationUC).then((res) {
       res.fold((err) {
         return emit(state.copyWith(
             apiState: NormalApiState.failure, errorMessage: err.message));

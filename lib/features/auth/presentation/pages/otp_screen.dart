@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pinput/pinput.dart';
+import 'package:sms_autofill/sms_autofill.dart';
 
 class OtpVerifyScreen extends StatefulWidget {
   const OtpVerifyScreen({
@@ -20,15 +21,27 @@ class OtpVerifyScreen extends StatefulWidget {
 class OtpVerifyScreenState extends State<OtpVerifyScreen> {
   final pinController = TextEditingController();
   final focusNode = FocusNode();
-  final formKey = GlobalKey<FormState>();
-
+  String enteredOTP = '';
+  late String requestType;
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   late Timer _timer;
-  int _secondsRemaining = 180; // 3 minutes
+  int _secondsRemaining = 180;
+  String? pin = '';
+
   @override
   void initState() {
-    super.initState();
+    fillOtp();
     _startTimer();
+    super.initState();
   }
+
+  fillOtp() async {
+    SmsAutoFill().listenForCode;
+    log("Waiting for OTP${SmsAutoFill().code}");
+    //print(SmsAutoFill().getAppSignature);
+  }
+
+  // 3 minutes
 
   void _startTimer() {
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {

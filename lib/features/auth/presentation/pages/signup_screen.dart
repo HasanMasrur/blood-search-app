@@ -1,10 +1,13 @@
 import 'dart:developer';
 import 'package:bloodsearchapp/config/const/app/app_assets.dart';
 import 'package:bloodsearchapp/config/const/app/app_colors.dart';
+import 'package:bloodsearchapp/config/navigation/route_name.dart';
+import 'package:bloodsearchapp/config/ulilities/enum/bloc_api_state.dart';
 import 'package:bloodsearchapp/config/ulilities/extensions/context_extensions.dart';
 import 'package:bloodsearchapp/core/widgets/custom_button.dart';
 import 'package:bloodsearchapp/core/widgets/input_field_widget.dart';
 import 'package:bloodsearchapp/features/auth/data/models/registationUc.dart';
+import 'package:bloodsearchapp/features/auth/presentation/cubit/registation/registation_state.dart';
 import 'package:bloodsearchapp/features/auth/presentation/widgets/phone_number_widget.dart';
 import 'package:bloodsearchapp/features/auth/presentation/cubit/registation/registation_cubit.dart';
 import 'package:flutter/material.dart';
@@ -331,43 +334,70 @@ class SignUpScreenState extends State<SignUpScreen> {
                           );
                         }),
                     10.verticalSpace,
-                    CustomButton(
-                        title: "Sign in",
-                        onPressed: () {
-                          if (formKey.currentState!.validate()) {
-                            if (gender.value == "Select Gender") {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text("Please Select Gender !")),
-                              );
-                              return;
-                            } else if (bloodGroup.value ==
-                                "Select BloodGroup") {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content:
-                                        Text("Please Select BloodGroup !")),
-                              );
-                              return;
-                            } else if (dob.value.isEmpty) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content:
-                                        Text("Please Select Date of Birth")),
-                              );
-                              return;
+
+                    BlocConsumer<RegistationCubit, RegistationState>(
+                        builder: (context, state) {
+                      if (state.apiState == NormalApiState.loading) {
+                        return const Center(
+                          child: CircularProgressIndicator.adaptive(
+                            backgroundColor: AppColors.primary,
+                          ),
+                        );
+                      }
+                      return CustomButton(
+                          title: "Sign in",
+                          onPressed: () {
+                            if (formKey.currentState!.validate()) {
+                              if (gender.value == "Select Gender") {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text("Please Select Gender !")),
+                                );
+                                return;
+                              } else if (bloodGroup.value ==
+                                  "Select BloodGroup") {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content:
+                                          Text("Please Select BloodGroup !")),
+                                );
+                                return;
+                              } else if (dob.value.isEmpty) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content:
+                                          Text("Please Select Date of Birth")),
+                                );
+                                return;
+                              }
+                              context.read<RegistationCubit>().signUp(
+                                  RegistrationUc(
+                                      bloodGroup: bloodGroup.value,
+                                      gender: gender.value,
+                                      password: password.text,
+                                      dateOfBirth: dob.value,
+                                      phoneNumber: phoneCNT.text,
+                                      countryCode: phoneValue.value.countryCode,
+                                      fullName: fullName.text));
                             }
-                            context.read<RegistationCubit>().signUp(
-                                RegistrationUc(
-                                    bloodGroup: bloodGroup.value,
-                                    gender: gender.value,
-                                    password: password.text,
-                                    dateOfBirth: dob.value,
-                                    phoneNumber: phoneCNT.text,
-                                    countryCode: phoneValue.value.countryCode,
-                                    fullName: fullName.text));
-                          }
-                        }),
+                          });
+                    }, listener: (context, state) {
+                      switch (state.apiState) {
+                        case NormalApiState.loading:
+                          break;
+                        case NormalApiState.loaded:
+                          Navigator.pushNamed(
+                              context, RouteName.otpVerifyScreen);
+                          break;
+                        case NormalApiState.failure:
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(state.errorMessage)),
+                          );
+                          break;
+                        default:
+                          log("default");
+                      }
+                    })
                   ],
                 ),
               ),

@@ -38,10 +38,11 @@ class AuthRemoteServices {
     });
   }
 
-  Future<Either<Failure, dynamic>> registrations(
+  Future<Either<Failure, dynamic>> signUp(
       {required RegistrationUc registationUc}) async {
+    log(registationUc.toJson().toString());
     final APIRequestParam param = APIRequestParam(
-      path: '',
+      path: ApiEndPoints.sendOtp,
       data: registationUc.toJson(),
       doCache: false,
     );

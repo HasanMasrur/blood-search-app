@@ -7,7 +7,7 @@ import 'package:dartz/dartz.dart';
 
 abstract class AuthRepository {
   Future<Either<Failure, UserEntities>> login({required LogInUc loginUc});
-  Future<Either<Failure, dynamic>> registration(
+  Future<Either<Failure, dynamic>> signUp(
       {required RegistrationUc registrationUc});
   Future<Either<Failure, dynamic>> otpVerify(
       {required OtpVerifyUc otpVerifyUc});

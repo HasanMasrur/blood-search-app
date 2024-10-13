@@ -15,9 +15,9 @@ class AuthUseCase {
     return await authRepository.login(loginUc: loginUc);
   }
 
-  Future<Either<Failure, dynamic>> registration(
+  Future<Either<Failure, dynamic>> signUp(
       {required RegistrationUc registationUc}) async {
-    return await authRepository.registration(registrationUc: registationUc);
+    return await authRepository.signUp(registrationUc: registationUc);
   }
 
   Future<Either<Failure, dynamic>> otpVerify(

@@ -19,10 +19,9 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<Either<Failure, dynamic>> registration(
+  Future<Either<Failure, dynamic>> signUp(
       {required RegistrationUc registrationUc}) async {
-    return await authRemoteServices.registrations(
-        registationUc: registrationUc);
+    return await authRemoteServices.signUp(registationUc: registrationUc);
   }
 
   @override
