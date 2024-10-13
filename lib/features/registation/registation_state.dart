@@ -1,30 +1,31 @@
+import 'package:bloodsearchapp/config/ulilities/enum/bloc_api_state.dart';
 import 'package:equatable/equatable.dart';
 
 class RegistationState extends Equatable {
   final NormalApiState apiState;
   final String errorMessage;
-  final String email;
+  final String phone;
 
   const RegistationState(
       {required this.apiState,
       required this.errorMessage,
-      required this.email});
+      required this.phone});
 
   @override
   List<Object?> get props => [
         apiState,
         errorMessage,
-        email,
+        phone,
       ];
 
   RegistationState copyWith({
     NormalApiState? apiState,
     String? errorMessage,
-    String? email,
+    String? phone,
   }) {
     return RegistationState(
       apiState: apiState ?? this.apiState,
-      email: email ?? this.email,
+      phone: phone ?? this.phone,
       errorMessage: errorMessage ?? this.errorMessage,
     );
   }
