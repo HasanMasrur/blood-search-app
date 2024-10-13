@@ -50,6 +50,7 @@ dependencies:
   dio: ^5.4.1
   provider: ^6.1.2
   intl_phone_field:
+  pinput: ^4.0.0
 
 
 dev_dependencies:
