@@ -93,13 +93,13 @@ class InputFieldWidget extends StatelessWidget {
         labelStyle: GoogleFonts.poppins(
           fontWeight: FontWeight.w500,
           fontSize: 14.h,
-          color: context.isDarkMode ? AppColors.white : const Color(0xff4C4D54),
+          color: context.isDarkMode ? AppColors.white : AppColors.black,
           fontStyle: FontStyle.normal,
           textStyle: Theme.of(context).textTheme.displayLarge,
         ),
 
         hintStyle: GoogleFonts.poppins(
-          color: context.isDarkMode ? AppColors.white : const Color(0xff8E8E93),
+          color: context.isDarkMode ? AppColors.white : AppColors.black,
           fontWeight: FontWeight.w400,
           fontSize: 14.h,
           fontStyle: FontStyle.normal,
@@ -114,7 +114,7 @@ class InputFieldWidget extends StatelessWidget {
                 ? AppColors.white
                 : borderColor != null
                     ? borderColor!
-                    : AppColors.gray,
+                    : AppColors.black,
           ),
         ),
         enabledBorder: OutlineInputBorder(
@@ -125,7 +125,7 @@ class InputFieldWidget extends StatelessWidget {
                 ? AppColors.white
                 : borderColor != null
                     ? borderColor!
-                    : AppColors.gray,
+                    : AppColors.black,
           ),
         ),
         disabledBorder: OutlineInputBorder(
@@ -136,7 +136,7 @@ class InputFieldWidget extends StatelessWidget {
                 ? AppColors.white
                 : borderColor != null
                     ? borderColor!
-                    : AppColors.gray,
+                    : AppColors.black,
           ),
         ),
         focusedErrorBorder: OutlineInputBorder(
@@ -147,7 +147,7 @@ class InputFieldWidget extends StatelessWidget {
                 ? AppColors.white
                 : borderColor != null
                     ? borderColor!
-                    : AppColors.gray,
+                    : AppColors.black,
           ),
         ),
         focusedBorder: OutlineInputBorder(
@@ -158,7 +158,7 @@ class InputFieldWidget extends StatelessWidget {
                 ? AppColors.white
                 : borderColor != null
                     ? borderColor!
-                    : AppColors.gray,
+                    : AppColors.black,
           ),
         ),
         errorStyle: GoogleFonts.poppins(
