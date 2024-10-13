@@ -1,7 +1,15 @@
 import 'dart:developer';
 
+import 'package:bloodsearchapp/config/const/app/api_endpoints.dart';
+import 'package:bloodsearchapp/core/error/api_error_generator.dart';
+import 'package:bloodsearchapp/core/error/error.dart';
+import 'package:bloodsearchapp/core/network/dio_client/dio_client.dart';
+import 'package:bloodsearchapp/core/network/dio_client/request_params.dart';
+import 'package:bloodsearchapp/features/auth/data/models/loginUc.dart';
+import 'package:bloodsearchapp/features/auth/data/models/otpVerifyUc.dart';
+import 'package:bloodsearchapp/features/auth/data/models/registationUc.dart';
+import 'package:bloodsearchapp/features/auth/data/models/userModel.dart';
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
 
 class AuthRemoteServices {
   final DioClient _dioClient = DioClient.instance;
@@ -9,7 +17,7 @@ class AuthRemoteServices {
   Future<Either<Failure, UserModel>> getLogin(
       {required LoginUc loginuc}) async {
     final APIRequestParam param = APIRequestParam(
-      path: 'https://api.bitcommerz.com/api/v1/auth/admin/login',
+      path: ApiEndPoints.login,
       data: loginuc.toJson(),
       doCache: false,
     );
@@ -34,7 +42,7 @@ class AuthRemoteServices {
   Future<Either<Failure, dynamic>> registrations(
       {required RegistrationUc registationUc}) async {
     final APIRequestParam param = APIRequestParam(
-      path: 'https://api.bitcommerz.com/api/v1/user/admin/create',
+      path: '',
       data: registationUc.toJson(),
       doCache: false,
     );
@@ -59,7 +67,7 @@ class AuthRemoteServices {
   Future<Either<Failure, dynamic>> otpVerify(
       {required OtpVerifyUc optVerifyUc}) async {
     final APIRequestParam param = APIRequestParam(
-      path: 'https://api.bitcommerz.com/api/v1/user/admin/verify-otp',
+      path: '',
       data: optVerifyUc.toJson(),
       doCache: false,
     );
@@ -71,45 +79,6 @@ class AuthRemoteServices {
         try {
           log("success data");
           return Right(r.data);
-        } on Exception catch (e) {
-          return Left(InvalidFormatFailure(
-            message: e.toString(),
-          ));
-        }
-      });
-    });
-  }
-
-  // ShopSetup api called
-  Future<Either<Failure, UserModel>> shopSetUp(
-      {required String token, required ShopSetupUc shopSetupUc}) async {
-    log("token is $token, shopSetUp ${shopSetupUc.toJson()}");
-    List<String> imageType = shopSetupUc.file.split('.');
-    FormData formData = FormData.fromMap({
-      "name": shopSetupUc.name,
-      "type": shopSetupUc.type,
-      "slug": shopSetupUc.customDomain,
-      "themeId": shopSetupUc.themeId,
-      "productType": shopSetupUc.productType,
-      "file": await MultipartFile.fromFile(shopSetupUc.file,
-          filename: imageType.last),
-    });
-
-    final APIRequestParam param = APIRequestParam(
-      path: 'https://api.bitcommerz.com/api/v1/shop/setup',
-      options: Options(headers: {"Authorization": "Bearer $token"}),
-      data: formData,
-      doCache: false,
-    );
-    return await _dioClient.post(param).then((response) {
-      return response.fold((l) {
-        log("Eror Exception : ${l.response?.statusCode}");
-        return Left(ApiErrorGenerator.apiError(l));
-      }, (r) {
-        try {
-          log("Theme success data ${r.data}");
-          UserModel userModel = UserModel.fromJson(r.data);
-          return Right(userModel);
         } on Exception catch (e) {
           return Left(InvalidFormatFailure(
             message: e.toString(),

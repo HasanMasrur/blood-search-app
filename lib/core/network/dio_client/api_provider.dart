@@ -1,6 +1,6 @@
+import 'package:bloodsearchapp/core/network/dio_client/request_params.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:bitcommerz/core/network/dio_client/request_params.dart';
 
 abstract class ApiProvider {
   Future<Either<DioException, Response>> get(APIRequestParam param);

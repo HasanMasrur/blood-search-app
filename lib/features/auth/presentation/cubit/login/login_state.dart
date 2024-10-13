@@ -1,3 +1,4 @@
+import 'package:bloodsearchapp/config/ulilities/enum/bloc_api_state.dart';
 import 'package:bloodsearchapp/features/auth/domain/entities/user_entities.dart';
 import 'package:equatable/equatable.dart';
 

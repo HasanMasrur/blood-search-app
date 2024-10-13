@@ -1,9 +1,12 @@
+import 'package:bloodsearchapp/config/di/dependency_injector.dart';
 import 'package:bloodsearchapp/config/navigation/route_name.dart';
+import 'package:bloodsearchapp/features/auth/presentation/cubit/login/login_cubit.dart';
 import 'package:bloodsearchapp/features/auth/presentation/pages/login_screen.dart';
 import 'package:bloodsearchapp/features/auth/presentation/pages/otp_screen.dart';
 import 'package:bloodsearchapp/features/auth/presentation/pages/signup_screen.dart';
 import 'package:bloodsearchapp/features/launcher/presentation/pages/launcher_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppRouter {
   static final GlobalKey<NavigatorState> navigatorKey =
@@ -17,7 +20,10 @@ class AppRouter {
         );
       case RouteName.loginScreen:
         return MaterialPageRoute(
-          builder: (_) => const LoginScreen(),
+          builder: (_) => BlocProvider(
+            create: (context) => sl<LoginCubit>(),
+            child: const LoginScreen(),
+          ),
           settings: settings,
         );
       case RouteName.signUpScreen:

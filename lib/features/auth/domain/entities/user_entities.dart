@@ -1,12 +1,11 @@
 import 'dart:developer';
+import 'package:bloodsearchapp/features/auth/data/models/userModel.dart';
 import 'package:equatable/equatable.dart';
-import 'package:bitcommerz/features/auth/data/models/user_model.dart';
 
 // ignore: must_be_immutable
 class UserEntities extends Equatable {
   User user;
   String accessToken;
-
   UserEntities({
     required this.user,
     required this.accessToken,
@@ -21,61 +20,19 @@ class UserEntities extends Equatable {
   factory UserEntities.initial() {
     return UserEntities(
         user: User(
-            id: 0,
-            type: '',
-            avatar: '',
-            firstName: '',
-            lastName: '',
-            email: '',
+            id: '',
             phone: '',
+            fullName: '',
+            countryCode: '',
+            dateOfBirth: '',
             gender: '',
-            status: '',
-            shop: Shop(
-              type: "",
-              status: "",
-              slug: "",
-              name: "",
-              selectedOrderStatus: [],
-              typeId: "",
-              logo: "",
-              favicon: "",
-              customDomain: "",
-              address: "",
-              contactNumber: "",
-              certificateArn: "",
-              domainRecord: "",
-              certificateStatus: "",
-              partnerId: 0,
-              packageId: 0,
-              packagePrice: "",
-              themeId: 0,
-              metaTitle: "",
-              metaDescription: "",
-              metaKeywords: "",
-              metaLogo: "",
-              facebookPixelKey: '',
-              pixelAccessToken: "",
-              facebookPageId: "",
-              whatsappNumber: "",
-              googleAnalyticsKey: "",
-              googleTagManagerKey: "",
-              googleAdwordsKey: "",
-              packageStartDate: "",
-              packageExpiryDate: "",
-              deletedAt: "",
-              id: 0,
-              domainStatus: "",
-              shopSetup: false,
-              createdAt: DateTime.now(),
-              updatedAt: DateTime.now(),
-            ),
-            adminType: '',
-            permissions: []),
+            bloodGroup: '',
+            v: 0),
         accessToken: '');
   }
   @override
   String toString() {
-    return 'TodoEntities{packageList: , ,}';
+    return 'TodoEntities{: , ,}';
   }
 
   factory UserEntities.fromJson(Map<String, dynamic> map) {

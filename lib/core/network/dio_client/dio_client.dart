@@ -1,8 +1,8 @@
+import 'package:bloodsearchapp/config/const/app/api_endpoints.dart';
+import 'package:bloodsearchapp/core/network/dio_client/api_provider.dart';
+import 'package:bloodsearchapp/core/network/dio_client/request_params.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:bitcommerz/config/const/app/api_endpoints.dart';
-import 'package:bitcommerz/core/network/dio_client/api_provider.dart';
-import 'package:bitcommerz/core/network/dio_client/request_params.dart';
 
 class DioClient implements ApiProvider {
   static DioClient? _instance;
