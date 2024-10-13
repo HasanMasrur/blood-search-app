@@ -5,7 +5,7 @@ import 'package:bloodsearchapp/features/auth/presentation/pages/login_screen.dar
 import 'package:bloodsearchapp/features/auth/presentation/pages/otp_screen.dart';
 import 'package:bloodsearchapp/features/auth/presentation/pages/signup_screen.dart';
 import 'package:bloodsearchapp/features/launcher/presentation/pages/launcher_screen.dart';
-import 'package:bloodsearchapp/features/registation/registation_cubit.dart';
+import 'package:bloodsearchapp/features/auth/presentation/cubit/registation/registation_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

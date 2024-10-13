@@ -90,18 +90,13 @@ class LoginScreenState extends State<LoginScreen> {
                           fontSize: 22.sp),
                     ),
                     25.verticalSpace,
-                    ValueListenableBuilder(
-                        valueListenable: phoneValue,
-                        builder: (context, isVisible, widget) {
-                          return PhoneNumberWidget(
-                            phoneCNT: phoneCNT,
-                            onChanged: (PhoneNumber phone) {
-                              log(phone.countryISOCode);
-                              phoneValue.value = phone;
-                            },
-                          );
-                        }),
-
+                    PhoneNumberWidget(
+                      phoneCNT: phoneCNT,
+                      onChanged: (PhoneNumber phone) {
+                        log(phone.countryISOCode);
+                        phoneValue.value = phone;
+                      },
+                    ),
                     12.verticalSpace,
                     // password field :
                     ValueListenableBuilder(
@@ -183,7 +178,7 @@ class LoginScreenState extends State<LoginScreen> {
                           );
                           break;
                         default:
-                          print('Invalid day');
+                          log("default");
                       }
                     }),
 
@@ -209,7 +204,6 @@ class LoginScreenState extends State<LoginScreen> {
                         )
                       ],
                     ),
-                    const SizedBox(height: 25),
                   ],
                 ),
               ),

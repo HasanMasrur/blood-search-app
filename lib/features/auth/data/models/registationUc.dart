@@ -1,53 +1,72 @@
-// To parse this JSON data, do
-//
-//     final registrationUc = registrationUcFromJson(jsonString);
-
-import 'dart:convert';
-
-RegistrationUc registrationUcFromJson(String str) =>
-    RegistrationUc.fromJson(json.decode(str));
-
-String registrationUcToJson(RegistrationUc data) => json.encode(data.toJson());
-
 class RegistrationUc {
-  String firstName;
-  String lastName;
-  String email;
-  String phone;
-  String password;
-  String shopName;
-  String type;
-  int packageId;
+  final String? appKey;
+  final String countryCode;
+  final String phoneNumber;
+  final String fullName;
+  final String gender;
+  final String dateOfBirth;
+  final String bloodGroup;
+  final String password;
 
   RegistrationUc({
-    required this.firstName,
-    required this.lastName,
-    required this.email,
-    required this.phone,
+    this.appKey,
+    required this.countryCode,
+    required this.phoneNumber,
+    required this.fullName,
+    required this.gender,
+    required this.dateOfBirth,
+    required this.bloodGroup,
     required this.password,
-    required this.shopName,
-    required this.type,
-    required this.packageId,
   });
 
-  factory RegistrationUc.fromJson(Map<String, dynamic> json) => RegistrationUc(
-      firstName: json["firstName"],
-      lastName: json["lastName"],
-      email: json["email"],
-      phone: json["phone"],
-      password: json["password"],
-      shopName: json["shopName"],
-      type: json["type"],
-      packageId: json['package_id']);
+  // Factory constructor to create an instance from a JSON map
+  factory RegistrationUc.fromJson(Map<String, dynamic> json) {
+    return RegistrationUc(
+      appKey: json['app_key'],
+      countryCode: json['country_code'],
+      phoneNumber: json['phone_number'],
+      fullName: json['full_name'],
+      gender: json['gender'],
+      dateOfBirth: json['date_of_birth'],
+      bloodGroup: json['blood_group'],
+      password: json['password'],
+    );
+  }
 
-  Map<String, dynamic> toJson() => {
-        "firstName": firstName,
-        "lastName": lastName,
-        "email": email,
-        "phone": phone,
-        "password": password,
-        "shopName": shopName,
-        "type": type,
-        "package_id": packageId
-      };
+  // Method to convert an instance to a JSON map
+  Map<String, dynamic> toJson() {
+    return {
+      'app_key': appKey,
+      'country_code': countryCode,
+      'phone_number': phoneNumber,
+      'full_name': fullName,
+      'gender': gender,
+      'date_of_birth': dateOfBirth,
+      'blood_group': bloodGroup,
+      'password': password,
+    };
+  }
+
+  // CopyWith method to create a modified copy of the instance
+  RegistrationUc copyWith({
+    String? appKey,
+    String? countryCode,
+    String? phoneNumber,
+    String? fullName,
+    String? gender,
+    String? dateOfBirth,
+    String? bloodGroup,
+    String? password,
+  }) {
+    return RegistrationUc(
+      appKey: appKey ?? this.appKey,
+      countryCode: countryCode ?? this.countryCode,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      fullName: fullName ?? this.fullName,
+      gender: gender ?? this.gender,
+      dateOfBirth: dateOfBirth ?? this.dateOfBirth,
+      bloodGroup: bloodGroup ?? this.bloodGroup,
+      password: password ?? this.password,
+    );
+  }
 }

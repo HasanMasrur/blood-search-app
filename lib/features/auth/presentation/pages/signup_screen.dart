@@ -1,17 +1,17 @@
 import 'dart:developer';
 import 'package:bloodsearchapp/config/const/app/app_assets.dart';
 import 'package:bloodsearchapp/config/const/app/app_colors.dart';
-import 'package:bloodsearchapp/config/navigation/route_name.dart';
 import 'package:bloodsearchapp/config/ulilities/extensions/context_extensions.dart';
 import 'package:bloodsearchapp/core/widgets/custom_button.dart';
 import 'package:bloodsearchapp/core/widgets/input_field_widget.dart';
+import 'package:bloodsearchapp/features/auth/data/models/registationUc.dart';
+import 'package:bloodsearchapp/features/auth/presentation/widgets/phone_number_widget.dart';
+import 'package:bloodsearchapp/features/auth/presentation/cubit/registation/registation_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:intl_phone_field/country_picker_dialog.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl_phone_field/phone_number.dart';
 import 'package:bloodsearchapp/core/error/validator.dart';
 
@@ -30,9 +30,10 @@ class SignUpScreenState extends State<SignUpScreen> {
   bool isShowPass = false;
   List<DropdownMenuItem<String>> get dropdownItems {
     List<DropdownMenuItem<String>> menuItems = [
+      const DropdownMenuItem(
+          value: "Select Gender", child: Text("Select Gender")),
       const DropdownMenuItem(value: "Male", child: Text("Male")),
       const DropdownMenuItem(value: "Female", child: Text("Female")),
-      const DropdownMenuItem(value: "Other", child: Text("Other")),
     ];
     return menuItems;
   }
@@ -65,9 +66,9 @@ class SignUpScreenState extends State<SignUpScreen> {
   @override
   void initState() {
     super.initState();
-    dob = ValueNotifier(DateTime.now().toString());
-    gender = ValueNotifier("Other");
-    bloodGroup = ValueNotifier("Select BloodGroup");
+    dob = ValueNotifier('');
+    gender = ValueNotifier('Select Gender');
+    bloodGroup = ValueNotifier('Select BloodGroup');
   }
 
   late ValueNotifier<PhoneNumber> phoneValue = ValueNotifier(
@@ -130,78 +131,12 @@ class SignUpScreenState extends State<SignUpScreen> {
                     ),
 
                     8.verticalSpace,
-                    Container(
-                      padding: const EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                            width: 1,
-                            color: context.isDarkMode
-                                ? AppColors.white
-                                : AppColors.black,
-                          ),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: IntlPhoneField(
-                        flagsButtonPadding:
-                            const EdgeInsets.symmetric(horizontal: 10),
-                        dropdownIconPosition: IconPosition.trailing,
-                        pickerDialogStyle: PickerDialogStyle(
-                            countryNameStyle: TextStyle(
-                          fontStyle: FontStyle.normal,
-                          fontSize: 15.h,
-                        )),
-                        controller: phoneCNT,
-                        onCountryChanged: (country) {
-                          //  log("Max ${country.maxLength}");
-                        },
-                        style: GoogleFonts.poppins(
-                          fontStyle: FontStyle.normal,
-                          textStyle: Theme.of(context).textTheme.displayLarge,
-                          fontSize: 13.h,
-                          fontWeight: FontWeight.w600,
-                          color: context.isDarkMode
-                              ? AppColors.white
-                              : AppColors.black,
-                        ),
-                        decoration: InputDecoration(
-                          fillColor: context.isDarkMode
-                              ? AppColors.black
-                              : AppColors.white,
-                          prefixIconColor: context.isDarkMode
-                              ? AppColors.white
-                              : AppColors.black,
-                          errorText: null,
-                          labelText: 'Phone Number',
-                          // border: InputBorder.none,
-                          // label: ,
-                          border: InputBorder.none,
-                          //  const OutlineInputBorder(
-                          //   borderSide: BorderSide(color: Color(0xffD1D1D6)),
-                          // ),
-                          focusedBorder: InputBorder.none,
-                          //  const OutlineInputBorder(
-                          //   borderSide: BorderSide(color: Color(0xffD1D1D6)),
-                          // ),
-                          errorBorder: InputBorder.none,
-                          // const OutlineInputBorder(
-                          //   borderSide: BorderSide(
-                          //     color: Color(0xff474747),
-                          //     width: 1,
-                          //   ),
-                          // ),
-                          errorStyle: GoogleFonts.poppins(
-                            fontStyle: FontStyle.normal,
-                            textStyle: Theme.of(context).textTheme.displayLarge,
-                            color: const Color(0xff474747),
-                            fontSize: 10,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        initialCountryCode: 'BD',
-                        onChanged: (phone) {
-                          //   log(phone.countryISOCode);
-                          phoneValue.value = phone;
-                        },
-                      ),
+                    PhoneNumberWidget(
+                      phoneCNT: phoneCNT,
+                      onChanged: (PhoneNumber phone) {
+                        log(phone.countryISOCode);
+                        phoneValue.value = phone;
+                      },
                     ),
                     8.verticalSpace,
                     SizedBox(
@@ -211,9 +146,11 @@ class SignUpScreenState extends State<SignUpScreen> {
                         valueListenable: gender,
                         builder: (context, valueListenableGender, child) {
                           return DropdownButtonFormField(
-                            style: const TextStyle(
-                              color: Color(0xffa5a8af),
-                              fontSize: 12,
+                            style: TextStyle(
+                              color: context.isDarkMode
+                                  ? AppColors.white
+                                  : AppColors.black,
+                              fontSize: 12.h,
                               fontFamily: "Poppins",
                             ),
                             decoration: InputDecoration(
@@ -227,7 +164,7 @@ class SignUpScreenState extends State<SignUpScreen> {
                                 ),
                               ),
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
+                                borderRadius: BorderRadius.circular(10),
                                 borderSide: BorderSide(
                                   width: 1,
                                   color: context.isDarkMode
@@ -259,7 +196,7 @@ class SignUpScreenState extends State<SignUpScreen> {
                     8.verticalSpace,
                     SizedBox(
                       width: 1.sw,
-                      height: 60,
+                      height: 60.h,
                       child: ValueListenableBuilder(
                           valueListenable: dob,
                           builder: (context, valueListenableDOB, child) {
@@ -316,14 +253,16 @@ class SignUpScreenState extends State<SignUpScreen> {
                     8.verticalSpace,
                     SizedBox(
                       width: 1.sw,
-                      height: 60,
+                      height: 60.h,
                       child: ValueListenableBuilder(
                         valueListenable: bloodGroup,
                         builder: (context, valueListenableBlood, child) {
                           return DropdownButtonFormField(
-                            style: const TextStyle(
-                              color: Color(0xffa5a8af),
-                              fontSize: 12,
+                            style: TextStyle(
+                              color: context.isDarkMode
+                                  ? AppColors.white
+                                  : AppColors.black,
+                              fontSize: 12.h,
                               fontFamily: "Poppins",
                             ),
                             decoration: InputDecoration(
@@ -396,8 +335,37 @@ class SignUpScreenState extends State<SignUpScreen> {
                         title: "Sign in",
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
-                            Navigator.pushReplacementNamed(
-                                context, RouteName.otpVerifyScreen);
+                            if (gender.value == "Select Gender") {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text("Please Select Gender !")),
+                              );
+                              return;
+                            } else if (bloodGroup.value ==
+                                "Select BloodGroup") {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content:
+                                        Text("Please Select BloodGroup !")),
+                              );
+                              return;
+                            } else if (dob.value.isEmpty) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content:
+                                        Text("Please Select Date of Birth")),
+                              );
+                              return;
+                            }
+                            context.read<RegistationCubit>().signUp(
+                                RegistrationUc(
+                                    bloodGroup: bloodGroup.value,
+                                    gender: gender.value,
+                                    password: password.text,
+                                    dateOfBirth: dob.value,
+                                    phoneNumber: phoneCNT.text,
+                                    countryCode: phoneValue.value.countryCode,
+                                    fullName: fullName.text));
                           }
                         }),
                   ],

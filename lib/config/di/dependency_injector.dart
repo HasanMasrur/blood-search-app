@@ -4,6 +4,7 @@ import 'package:bloodsearchapp/features/auth/data/repositories/auth_repository_i
 import 'package:bloodsearchapp/features/auth/domain/repositories/auth_repository.dart';
 import 'package:bloodsearchapp/features/auth/domain/usecases/auth_usecase.dart';
 import 'package:bloodsearchapp/features/auth/presentation/cubit/login/login_cubit.dart';
+import 'package:bloodsearchapp/features/auth/presentation/cubit/registation/registation_cubit.dart';
 import 'package:get_it/get_it.dart';
 
 final GetIt sl = GetIt.instance;
@@ -19,6 +20,8 @@ Future<void> _appTheme() async {
 
 Future<void> _auth() async {
   sl.registerFactory<LoginCubit>(() => LoginCubit(authUseCase: sl()));
+  sl.registerFactory<RegistationCubit>(
+      () => RegistationCubit(authUseCase: sl()));
   // Auth use-case
   sl.registerLazySingleton(() => AuthUseCase(
         authRepository: sl(),

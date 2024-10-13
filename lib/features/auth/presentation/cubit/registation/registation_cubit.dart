@@ -1,7 +1,7 @@
 import 'package:bloodsearchapp/config/ulilities/enum/bloc_api_state.dart';
 import 'package:bloodsearchapp/features/auth/data/models/registationUc.dart';
 import 'package:bloodsearchapp/features/auth/domain/usecases/auth_usecase.dart';
-import 'package:bloodsearchapp/features/registation/registation_state.dart';
+import 'package:bloodsearchapp/features/auth/presentation/cubit/registation/registation_state.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 class RegistationCubit extends Cubit<RegistationState> {
@@ -14,7 +14,7 @@ class RegistationCubit extends Cubit<RegistationState> {
             errorMessage: "Please Swipe Down to Refresh",
           ),
         );
-  Future<void> getRegistations(RegistrationUc registationUc) async {
+  Future<void> signUp(RegistrationUc registationUc) async {
     emit(state.copyWith(apiState: NormalApiState.loading));
     await authUseCase.registration(registationUc: registationUc).then((res) {
       res.fold((err) {
