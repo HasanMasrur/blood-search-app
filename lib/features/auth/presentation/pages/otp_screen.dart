@@ -1,19 +1,23 @@
 import 'dart:async';
 import 'dart:developer';
 import 'package:bloodsearchapp/config/const/app/app_colors.dart';
+import 'package:bloodsearchapp/config/navigation/route_name.dart';
+import 'package:bloodsearchapp/config/ulilities/enum/bloc_api_state.dart';
 import 'package:bloodsearchapp/config/ulilities/extensions/context_extensions.dart';
 import 'package:bloodsearchapp/core/widgets/custom_button.dart';
+import 'package:bloodsearchapp/features/auth/data/models/otpVerifyUc.dart';
+import 'package:bloodsearchapp/features/auth/presentation/pages/otp_verify/otp_verify_cubit.dart';
+import 'package:bloodsearchapp/features/auth/presentation/pages/otp_verify/otp_verify_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pinput/pinput.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 
 class OtpVerifyScreen extends StatefulWidget {
-  const OtpVerifyScreen({
-    super.key,
-  });
-
+  const OtpVerifyScreen({super.key, required this.phoneNumber});
+  final String phoneNumber;
   @override
   OtpVerifyScreenState createState() => OtpVerifyScreenState();
 }
@@ -255,14 +259,36 @@ class OtpVerifyScreenState extends State<OtpVerifyScreen> {
                   ],
                 ),
                 const SizedBox(height: 25),
-                CustomButton(
-                    title: "Verify",
-                    onPressed: () {
-                      if (formKey.currentState!.validate()) {
-                        // Navigator.pushReplacementNamed(
-                        //     context, RouteName.otpVerifyScreen);
-                      }
-                    }),
+                BlocConsumer<OtpVerifyCubit, OtpVerifyState>(
+                    builder: (context, state) {
+                  if (state.apiState == NormalApiState.loading) {
+                    return const CircularProgressIndicator.adaptive();
+                  }
+                  return CustomButton(
+                      title: "Verify",
+                      onPressed: () {
+                        if (pinController.text.length == 6) {
+                          context.read<OtpVerifyCubit>().otpVerify(OtpVerifyUc(
+                              otpCode: pinController.text,
+                              phoneNumber: widget.phoneNumber));
+                        }
+                      });
+                }, listener: (context, state) {
+                  switch (state.apiState) {
+                    case NormalApiState.loading:
+                      break;
+                    case NormalApiState.loaded:
+                      Navigator.pushNamed(context, RouteName.otpVerifyScreen);
+                      break;
+                    case NormalApiState.failure:
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(state.errorMessage)),
+                      );
+                      break;
+                    default:
+                      log("default");
+                  }
+                }),
                 const SizedBox(height: 25),
               ],
             ),

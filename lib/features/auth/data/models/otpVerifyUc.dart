@@ -1,30 +1,26 @@
-// To parse this JSON data, do
-//
-//     final OtpVerifyUc = OtpVerifyUcFromJson(jsonString);
-
-import 'dart:convert';
-
-OtpVerifyUc otpVerifyUcFromJson(String str) =>
-    OtpVerifyUc.fromJson(json.decode(str));
-
-String otpVerifyUcToJson(OtpVerifyUc data) => json.encode(data.toJson());
-
+// ignore: file_names
 class OtpVerifyUc {
-  String email;
-  int code;
+  final String otpCode;
+  final String phoneNumber;
 
   OtpVerifyUc({
-    required this.email,
-    required this.code,
+    required this.otpCode,
+    required this.phoneNumber,
   });
 
-  factory OtpVerifyUc.fromJson(Map<String, dynamic> json) => OtpVerifyUc(
-        email: json["email"],
-        code: json["code"],
-      );
+  // Factory method to create an instance from JSON
+  factory OtpVerifyUc.fromJson(Map<String, dynamic> json) {
+    return OtpVerifyUc(
+      otpCode: json['otp_code'],
+      phoneNumber: json['phone_number'],
+    );
+  }
 
-  Map<String, dynamic> toJson() => {
-        "email": email,
-        "code": code,
-      };
+  // Method to convert the instance back to JSON
+  Map<String, dynamic> toJson() {
+    return {
+      'otp_code': otpCode,
+      'phone_number': phoneNumber,
+    };
+  }
 }
