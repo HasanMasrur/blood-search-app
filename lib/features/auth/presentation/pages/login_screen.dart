@@ -79,23 +79,13 @@ class LoginScreenState extends State<LoginScreen> {
                   children: [
                     20.verticalSpace,
                     Text(
-                      "Login",
+                      "Login ",
                       style: TextStyle(
                           color: context.isDarkMode
                               ? AppColors.white
                               : AppColors.black,
                           fontWeight: FontWeight.w600,
                           fontSize: 22.sp),
-                    ),
-                    10.verticalSpace,
-                    Text(
-                      "Login your account with...",
-                      style: TextStyle(
-                          color: context.isDarkMode
-                              ? AppColors.white
-                              : AppColors.black,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 15.sp),
                     ),
                     25.verticalSpace,
                     Container(

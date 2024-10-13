@@ -1,10 +1,8 @@
 import 'dart:async';
 import 'dart:developer';
 import 'package:bloodsearchapp/config/const/app/app_colors.dart';
-import 'package:bloodsearchapp/config/navigation/route_name.dart';
 import 'package:bloodsearchapp/config/ulilities/extensions/context_extensions.dart';
 import 'package:bloodsearchapp/core/widgets/custom_button.dart';
-import 'package:bloodsearchapp/core/widgets/input_field_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
