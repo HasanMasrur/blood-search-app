@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:bitcommerz/config/utilities/enum/bloc_api_state.dart';
 
 class RegistationState extends Equatable {
   final NormalApiState apiState;
