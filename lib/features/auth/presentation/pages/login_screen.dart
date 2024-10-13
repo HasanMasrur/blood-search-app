@@ -10,14 +10,11 @@ import 'package:bloodsearchapp/features/auth/data/models/loginUc.dart';
 import 'package:bloodsearchapp/features/auth/presentation/cubit/login/login_cubit.dart';
 import 'package:bloodsearchapp/features/auth/presentation/cubit/login/login_state.dart';
 import 'package:bloodsearchapp/features/auth/presentation/widgets/login_icon_button.dart';
+import 'package:bloodsearchapp/features/auth/presentation/widgets/phone_number_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:intl_phone_field/country_picker_dialog.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl_phone_field/phone_number.dart';
 import 'package:bloodsearchapp/core/error/validator.dart';
 
@@ -29,7 +26,7 @@ class LoginScreen extends StatefulWidget {
 
 class LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  late TextEditingController phoneCNT = TextEditingController(text: '');
+  TextEditingController phoneCNT = TextEditingController(text: '');
   final TextEditingController password = TextEditingController(text: "");
   TextEditingController email = TextEditingController(text: "");
   final isPasswordVisible = ValueNotifier(true);
@@ -93,98 +90,19 @@ class LoginScreenState extends State<LoginScreen> {
                           fontSize: 22.sp),
                     ),
                     25.verticalSpace,
-                    IntlPhoneField(
-                      flagsButtonPadding:
-                          EdgeInsets.symmetric(horizontal: 10, vertical: 15.h),
-                      dropdownIconPosition: IconPosition.trailing,
-                      pickerDialogStyle: PickerDialogStyle(
-                          countryNameStyle: TextStyle(
-                        fontStyle: FontStyle.normal,
-                        fontSize: 15.h,
-                      )),
-                      controller: phoneCNT,
-                      onCountryChanged: (country) {
-                        //  log("Max ${country.maxLength}");
-                      },
-                      style: GoogleFonts.poppins(
-                        fontStyle: FontStyle.normal,
-                        textStyle: Theme.of(context).textTheme.displayLarge,
-                        fontSize: 13.h,
-                        fontWeight: FontWeight.w600,
-                        color: context.isDarkMode
-                            ? AppColors.white
-                            : AppColors.black,
-                      ),
-                      keyboardType: TextInputType
-                          .phone, // This sets the keyboard to numeric
-                      inputFormatters: [
-                        FilteringTextInputFormatter
-                            .digitsOnly, // This allows only digits
-                      ],
-                      decoration: InputDecoration(
-                        fillColor: context.isDarkMode
-                            ? AppColors.black
-                            : AppColors.white,
-                        prefixIconColor: Colors.grey,
-                        errorText: null,
-                        labelText: 'Phone Number',
-                        // border: InputBorder.none,
-                        // label: ,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.w),
-                          borderSide: BorderSide(
-                              width: 1,
-                              color: context.isDarkMode
-                                  ? AppColors.white
-                                  : AppColors.black),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.w),
-                          borderSide: BorderSide(
-                              width: 1,
-                              color: context.isDarkMode
-                                  ? AppColors.white
-                                  : AppColors.black),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.w),
-                          borderSide: BorderSide(
-                              width: 1,
-                              color: context.isDarkMode
-                                  ? AppColors.white
-                                  : AppColors.black),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: context.isDarkMode
-                                ? AppColors.white
-                                : AppColors.black,
-                            width: 1,
-                          ),
-                        ),
-                        errorStyle: GoogleFonts.poppins(
-                          fontStyle: FontStyle.normal,
-                          textStyle: Theme.of(context).textTheme.displayLarge,
-                          color: const Color(0xff474747),
-                          fontSize: 10,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      initialCountryCode: 'BD',
-                      onChanged: (phone) {
-                        //   log(phone.countryISOCode);
-                        phoneValue.value = phone;
-                      },
-                      // validator: (value) {
-                      //   if (value == null || value.number.isEmpty) {
-                      //     return 'Please enter your phone number';
-                      //   } else if (value.number.length < 10) {
-                      //     return 'Please enter a valid phone number';
-                      //   }
-                      //   return null;
-                      // },
-                    ),
-                    18.verticalSpace,
+                    ValueListenableBuilder(
+                        valueListenable: phoneValue,
+                        builder: (context, isVisible, widget) {
+                          return PhoneNumberWidget(
+                            phoneCNT: phoneCNT,
+                            onChanged: (PhoneNumber phone) {
+                              log(phone.countryISOCode);
+                              phoneValue.value = phone;
+                            },
+                          );
+                        }),
+
+                    12.verticalSpace,
                     // password field :
                     ValueListenableBuilder(
                         valueListenable: isPasswordVisible,

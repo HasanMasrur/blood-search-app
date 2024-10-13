@@ -25,7 +25,7 @@ class SignUpScreenState extends State<SignUpScreen> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   late TextEditingController phoneCNT = TextEditingController(text: '');
   final TextEditingController password = TextEditingController(text: "");
-  TextEditingController email = TextEditingController(text: "");
+  TextEditingController fullName = TextEditingController(text: "");
   final isPasswordVisible = ValueNotifier(true);
   bool isShowPass = false;
   List<DropdownMenuItem<String>> get dropdownItems {
@@ -118,7 +118,7 @@ class SignUpScreenState extends State<SignUpScreen> {
                       suffixlogo: '',
                       lable: "Full Name",
                       hintTitle: "Full Name",
-                      inputController: password,
+                      inputController: fullName,
                       isValid: true,
                       logo: '',
                       onTap: () {
@@ -128,24 +128,7 @@ class SignUpScreenState extends State<SignUpScreen> {
                       validator: (firstName) =>
                           firstName?.isValid(6, "passsword"),
                     ),
-                    8.verticalSpace,
-                    InputFieldWidget(
-                      sufixIconview: false,
-                      prefixIconview:
-                          password.value.text.isNotEmpty ? false : false,
-                      suffixlogo: '',
-                      lable: "Email",
-                      hintTitle: "Email",
-                      inputController: password,
-                      isValid: true,
-                      logo: '',
-                      onTap: () {
-                        isPasswordVisible.value = !isPasswordVisible.value;
-                      },
-                      passwordVisible: false,
-                      validator: (firstName) =>
-                          firstName?.isValid(6, "passsword"),
-                    ),
+
                     8.verticalSpace,
                     Container(
                       padding: const EdgeInsets.all(5),
